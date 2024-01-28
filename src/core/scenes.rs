@@ -473,7 +473,7 @@ impl Scenes {
             let scene_deps = get_expr_scene_deps(expr);
             for scene_id in scene_deps {
                 invalidated_devices
-                    .extend(self.get_invalidated_devices_for_scene(devices, groups, &scene_id))
+                    .extend(self.get_invalidated_devices_for_scene(devices, groups, &scene_id));
             }
         }
 

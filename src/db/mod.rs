@@ -12,7 +12,7 @@ pub async fn init_db() -> Option<()> {
     let database_url = env::var("DATABASE_URL").ok();
 
     if database_url.is_none() {
-        info!("DATABASE_URL environment variable not set, skipping PostgreSQL initialization.")
+        info!("DATABASE_URL environment variable not set, skipping PostgreSQL initialization.");
     }
 
     let database_url = database_url?;

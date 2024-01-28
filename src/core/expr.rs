@@ -146,7 +146,7 @@ pub fn state_to_eval_context(
 
         Function::new(move |argument| {
             if argument.is_empty() {
-                debug_print_context(&context)
+                debug_print_context(&context);
             } else {
                 dbg!(&argument);
             }
