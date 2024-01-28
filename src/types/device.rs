@@ -71,7 +71,7 @@ impl Display for ControllableState {
             };
 
             if let Some(bri) = self.brightness {
-                format!("{}, bri({})", color_str, bri)
+                format!("{color_str}, bri({bri})")
             } else {
                 color_str
             }

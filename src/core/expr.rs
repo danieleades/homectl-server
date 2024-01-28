@@ -33,7 +33,7 @@ fn value_kv_pairs_deep(
         serde_json::Value::Object(object) => object
             .iter()
             .flat_map(|(key, value)| {
-                let key = format!("{}.{}", prefix, key);
+                let key = format!("{prefix}.{key}");
                 value_kv_pairs_deep(value, key)
             })
             .collect(),
@@ -41,7 +41,7 @@ fn value_kv_pairs_deep(
             .iter()
             .enumerate()
             .flat_map(|(i, value)| {
-                let key = format!("{}.{}", prefix, i);
+                let key = format!("{prefix}.{i}");
                 value_kv_pairs_deep(value, key)
             })
             .collect(),
