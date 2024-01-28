@@ -123,21 +123,21 @@ impl DeviceColor {
 
     pub fn new_from_hs(h: u16, s: f32) -> Self {
         Self::Hs(Hs {
-            h: h as u64,
+            h: h.into(),
             s: OrderedFloat(s),
         })
     }
 
     pub fn new_from_rgb(r: u8, g: u8, b: u8) -> Self {
         Self::Rgb(Rgb {
-            r: r as u64,
-            g: g as u64,
-            b: b as u64,
+            r: r.into(),
+            g: g.into(),
+            b: b.into(),
         })
     }
 
     pub fn new_from_ct(ct: u16) -> Self {
-        Self::Ct(Ct { ct: ct as u64 })
+        Self::Ct(Ct { ct: ct.into() })
     }
 
     pub fn to_device_preferred_mode(&self, capabilities: &Capabilities) -> Option<Self> {
@@ -235,6 +235,6 @@ impl From<palette::rgb::Rgb> for DeviceColor {
 
 impl From<u16> for DeviceColor {
     fn from(ct: u16) -> Self {
-        Self::Ct(Ct { ct: ct as u64 })
+        Self::Ct(Ct { ct: ct.into() })
     }
 }
