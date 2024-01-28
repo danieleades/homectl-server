@@ -116,7 +116,7 @@ fn find_scene_device_lists(
 }
 
 /// Finds devices that are common in all given scenes
-fn find_scenes_common_devices(scene_device_lists: Vec<SceneDeviceList>) -> HashSet<DeviceKey> {
+fn find_scenes_common_devices(scene_device_lists: &[SceneDeviceList]) -> HashSet<DeviceKey> {
     let mut scenes_common_devices: HashSet<DeviceKey> = HashSet::new();
 
     if let Some(first_scene_devices) = scene_device_lists.first() {
@@ -196,7 +196,7 @@ pub fn get_next_cycled_scene(
     let scene_device_lists = find_scene_device_lists(&scene_devices_configs);
 
     // gather devices which exist in all cycled scenes
-    let scenes_common_devices = find_scenes_common_devices(scene_device_lists);
+    let scenes_common_devices = find_scenes_common_devices(&scene_device_lists);
 
     let active_scene_index =
         find_active_scene_index(&scene_devices_configs, &scenes_common_devices, devices);
