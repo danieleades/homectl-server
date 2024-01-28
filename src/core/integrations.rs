@@ -63,7 +63,7 @@ impl Integrations {
     }
 
     pub async fn run_register_pass(&self) -> Result<()> {
-        for (integration_id, li) in self.custom_integrations.iter() {
+        for (integration_id, li) in &self.custom_integrations {
             let mut integration = li.integration.lock().await;
 
             integration.register().await.unwrap();
@@ -77,7 +77,7 @@ impl Integrations {
     }
 
     pub async fn run_start_pass(&self) -> Result<()> {
-        for (integration_id, li) in self.custom_integrations.iter() {
+        for (integration_id, li) in &self.custom_integrations {
             let mut integration = li.integration.lock().await;
 
             integration.start().await.unwrap();
