@@ -31,7 +31,7 @@ impl Integration for Timer {
             .try_deserialize()
             .wrap_err("Failed to deserialize config of Timer integration")?;
 
-        Ok(Timer {
+        Ok(Self {
             id: id.clone(),
             config,
             event_tx,

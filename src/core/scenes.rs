@@ -218,7 +218,7 @@ pub fn get_next_cycled_scene(
 
 impl Scenes {
     pub fn new(config: ScenesConfig) -> Self {
-        Scenes {
+        Self {
             config,
             ..Default::default()
         }

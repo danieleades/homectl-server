@@ -33,7 +33,7 @@ impl Integration for Random {
             .try_deserialize()
             .wrap_err("Failed to deserialize config of Random integration")?;
 
-        Ok(Random {
+        Ok(Self {
             id: id.clone(),
             config,
             event_tx,

@@ -27,13 +27,13 @@ impl std::str::FromStr for DeviceId {
     type Err = std::convert::Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(DeviceId::new(s))
+        Ok(Self::new(s))
     }
 }
 
 impl DeviceId {
-    pub fn new(id: &str) -> DeviceId {
-        DeviceId(String::from(id))
+    pub fn new(id: &str) -> Self {
+        Self(String::from(id))
     }
 }
 
@@ -160,8 +160,8 @@ impl ControllableDevice {
         transition_ms: Option<u64>,
         capabilities: Capabilities,
         managed: ManageKind,
-    ) -> ControllableDevice {
-        ControllableDevice {
+    ) -> Self {
+        Self {
             scene,
             state: ControllableState {
                 power,
@@ -206,8 +206,8 @@ pub enum DeviceData {
 impl Display for DeviceData {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
-            DeviceData::Controllable(light) => light.state.to_string(),
-            DeviceData::Sensor(_) => "Sensor".to_string(),
+            Self::Controllable(light) => light.state.to_string(),
+            Self::Sensor(_) => "Sensor".to_string(),
         };
 
         f.write_str(&s)
@@ -232,7 +232,7 @@ pub struct Device {
 
 impl From<DeviceRow> for Device {
     fn from(row: DeviceRow) -> Self {
-        Device {
+        Self {
             id: row.device_id.into(),
             name: row.name,
             integration_id: row.integration_id.into(),
@@ -247,8 +247,8 @@ impl Device {
         id: DeviceId,
         name: String,
         state: DeviceData,
-    ) -> Device {
-        Device {
+    ) -> Self {
+        Self {
             id,
             name,
             integration_id,
@@ -304,7 +304,7 @@ impl Device {
         device
     }
 
-    pub fn color_to_mode(&self, mode: ColorMode, skip_ct_conversion: bool) -> Device {
+    pub fn color_to_mode(&self, mode: ColorMode, skip_ct_conversion: bool) -> Self {
         let mut device = self.clone();
 
         if let DeviceData::Controllable(controllable) = &mut device.data {
@@ -339,7 +339,7 @@ impl Device {
         }
     }
 
-    pub fn set_controllable_state(&self, state: ControllableState) -> Device {
+    pub fn set_controllable_state(&self, state: ControllableState) -> Self {
         let mut device = self.clone();
 
         if let DeviceData::Controllable(ref mut data) = device.data {
@@ -371,7 +371,7 @@ impl Device {
         }
     }
 
-    pub fn set_value(&self, value: &serde_json::Value) -> Result<Device> {
+    pub fn set_value(&self, value: &serde_json::Value) -> Result<Self> {
         let mut device = self.clone();
 
         if let DeviceData::Controllable(ref mut data) = device.data {
@@ -431,15 +431,15 @@ pub enum DeviceRef {
 
 impl DeviceRef {
     #[allow(dead_code)]
-    pub fn new_with_id(integration_id: IntegrationId, device_id: DeviceId) -> DeviceRef {
-        DeviceRef::Id(DeviceIdRef {
+    pub fn new_with_id(integration_id: IntegrationId, device_id: DeviceId) -> Self {
+        Self::Id(DeviceIdRef {
             integration_id,
             device_id,
         })
     }
 
-    pub fn new_with_name(integration_id: IntegrationId, name: String) -> DeviceRef {
-        DeviceRef::Name(DeviceNameRef {
+    pub fn new_with_name(integration_id: IntegrationId, name: String) -> Self {
+        Self::Name(DeviceNameRef {
             integration_id,
             name,
         })
@@ -448,7 +448,7 @@ impl DeviceRef {
 
 impl From<&DeviceKey> for DeviceRef {
     fn from(value: &DeviceKey) -> Self {
-        DeviceRef::Id(DeviceIdRef {
+        Self::Id(DeviceIdRef {
             integration_id: value.integration_id.clone(),
             device_id: value.device_id.clone(),
         })
@@ -464,8 +464,8 @@ pub struct DeviceKey {
 }
 
 impl DeviceKey {
-    pub fn new(integration_id: IntegrationId, device_id: DeviceId) -> DeviceKey {
-        DeviceKey {
+    pub fn new(integration_id: IntegrationId, device_id: DeviceId) -> Self {
+        Self {
             integration_id,
             device_id,
         }

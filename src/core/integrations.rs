@@ -33,7 +33,7 @@ impl Integrations {
         let expected_device_states = Default::default();
         let integrations = Default::default();
 
-        Integrations {
+        Self {
             expected_device_states,
             custom_integrations: integrations,
             event_tx,

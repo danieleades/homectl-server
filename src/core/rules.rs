@@ -20,7 +20,7 @@ pub struct Rules {
 
 impl Rules {
     pub fn new(config: RoutinesConfig, event_tx: TxEventChannel) -> Self {
-        Rules {
+        Self {
             config,
             event_tx,
             prev_triggered_routine_ids: Default::default(),

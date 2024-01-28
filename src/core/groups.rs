@@ -150,7 +150,7 @@ impl Groups {
     pub fn new(config: GroupsConfig) -> Self {
         let device_refs_by_groups = mk_device_refs_by_groups(&config);
 
-        Groups {
+        Self {
             config,
             device_refs_by_groups,
             flattened_groups: Default::default(),

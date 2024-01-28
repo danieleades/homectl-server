@@ -15,8 +15,8 @@ macro_attr! {
 }
 
 impl SceneId {
-    pub fn new(scene_id: String) -> SceneId {
-        SceneId(scene_id)
+    pub fn new(scene_id: String) -> Self {
+        Self(scene_id)
     }
 }
 
@@ -24,7 +24,7 @@ impl std::str::FromStr for SceneId {
     type Err = Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(SceneId(s.to_string()))
+        Ok(Self(s.to_string()))
     }
 }
 
@@ -70,7 +70,7 @@ pub struct SceneDeviceState {
 
 impl From<ControllableState> for SceneDeviceState {
     fn from(state: ControllableState) -> Self {
-        SceneDeviceState {
+        Self {
             power: Some(state.power),
             color: state.color,
             brightness: state.brightness,

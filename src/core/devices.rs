@@ -112,7 +112,7 @@ fn cmp_sensor_states(sensor: &SensorDevice, previous: &SensorDevice) -> bool {
 
 impl Devices {
     pub fn new(event_tx: TxEventChannel) -> Self {
-        Devices {
+        Self {
             event_tx,
             state: Default::default(),
             keys_by_name: Default::default(),

@@ -48,7 +48,7 @@ impl Integration for Circadian {
             .try_deserialize()
             .wrap_err("Failed to deserialize config of Circadian integration")?;
 
-        Ok(Circadian {
+        Ok(Self {
             id: id.clone(),
             config: config.clone(),
             event_tx,

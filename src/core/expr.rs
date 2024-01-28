@@ -398,7 +398,7 @@ pub struct Expr {
 
 impl Expr {
     pub fn new() -> Self {
-        Expr {
+        Self {
             context: HashMapContext::new(),
         }
     }

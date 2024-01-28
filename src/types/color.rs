@@ -33,7 +33,7 @@ pub enum ColorMode {
 }
 
 impl Capabilities {
-    pub fn singleton(mode: ColorMode) -> Capabilities {
+    pub fn singleton(mode: ColorMode) -> Self {
         let mut xy = false;
         let mut hs = false;
         let mut rgb = false;
@@ -54,7 +54,7 @@ impl Capabilities {
             }
         };
 
-        Capabilities { xy, hs, rgb, ct }
+        Self { xy, hs, rgb, ct }
     }
 
     pub fn is_supported(&self, color: &DeviceColor) -> bool {
@@ -114,33 +114,33 @@ pub enum DeviceColor {
 }
 
 impl DeviceColor {
-    pub fn new_from_xy(x: f32, y: f32) -> DeviceColor {
-        DeviceColor::Xy(Xy {
+    pub fn new_from_xy(x: f32, y: f32) -> Self {
+        Self::Xy(Xy {
             x: OrderedFloat(x),
             y: OrderedFloat(y),
         })
     }
 
-    pub fn new_from_hs(h: u16, s: f32) -> DeviceColor {
-        DeviceColor::Hs(Hs {
+    pub fn new_from_hs(h: u16, s: f32) -> Self {
+        Self::Hs(Hs {
             h: h as u64,
             s: OrderedFloat(s),
         })
     }
 
-    pub fn new_from_rgb(r: u8, g: u8, b: u8) -> DeviceColor {
-        DeviceColor::Rgb(Rgb {
+    pub fn new_from_rgb(r: u8, g: u8, b: u8) -> Self {
+        Self::Rgb(Rgb {
             r: r as u64,
             g: g as u64,
             b: b as u64,
         })
     }
 
-    pub fn new_from_ct(ct: u16) -> DeviceColor {
-        DeviceColor::Ct(Ct { ct: ct as u64 })
+    pub fn new_from_ct(ct: u16) -> Self {
+        Self::Ct(Ct { ct: ct as u64 })
     }
 
-    pub fn to_device_preferred_mode(&self, capabilities: &Capabilities) -> Option<DeviceColor> {
+    pub fn to_device_preferred_mode(&self, capabilities: &Capabilities) -> Option<Self> {
         // Don't perform any conversion if device supports current color mode
         if capabilities.is_supported(self) {
             return Some(self.clone());
@@ -174,14 +174,14 @@ impl DeviceColor {
 impl From<&DeviceColor> for palette::Yxy {
     fn from(color: &DeviceColor) -> Self {
         match color {
-            DeviceColor::Xy(xy) => palette::Yxy::from_components((*xy.x, *xy.y, 1.0)),
+            DeviceColor::Xy(xy) => Self::from_components((*xy.x, *xy.y, 1.0)),
             DeviceColor::Hs(hs) => {
                 let hsv: palette::hsv::Hsv = palette::Hsv::new(hs.h as f32, *hs.s, 1.0);
-                palette::Yxy::from_color_unclamped(hsv)
+                Self::from_color_unclamped(hsv)
             }
             DeviceColor::Rgb(rgb) => {
                 let rgb = palette::rgb::Srgb::new(rgb.r, rgb.g, rgb.b);
-                palette::Yxy::from_color(rgb.into_format::<f32>())
+                Self::from_color(rgb.into_format::<f32>())
             }
             DeviceColor::Ct(ct) => {
                 // http://www.brucelindbloom.com/index.html?Eqn_T_to_xy.html
@@ -199,7 +199,7 @@ impl From<&DeviceColor> for palette::Yxy {
                 };
                 let y = -3.0 * x.powi(2) + 2.87 * x - 0.275;
 
-                palette::Yxy::from_components((x, y, 1.0))
+                Self::from_components((x, y, 1.0))
             }
         }
     }
@@ -207,7 +207,7 @@ impl From<&DeviceColor> for palette::Yxy {
 
 impl From<palette::Yxy> for DeviceColor {
     fn from(yxy: palette::Yxy) -> Self {
-        DeviceColor::Xy(Xy {
+        Self::Xy(Xy {
             x: OrderedFloat(yxy.x),
             y: OrderedFloat(yxy.y),
         })
@@ -216,7 +216,7 @@ impl From<palette::Yxy> for DeviceColor {
 
 impl From<palette::Hsv> for DeviceColor {
     fn from(hsv: palette::Hsv) -> Self {
-        DeviceColor::Hs(Hs {
+        Self::Hs(Hs {
             h: hsv.hue.into_positive_degrees() as u64,
             s: OrderedFloat(hsv.saturation),
         })
@@ -225,7 +225,7 @@ impl From<palette::Hsv> for DeviceColor {
 
 impl From<palette::rgb::Rgb> for DeviceColor {
     fn from(rgb: palette::rgb::Rgb) -> Self {
-        DeviceColor::Rgb(Rgb {
+        Self::Rgb(Rgb {
             r: (rgb.red * 255.0) as u64,
             g: (rgb.green * 255.0) as u64,
             b: (rgb.blue * 255.0) as u64,
@@ -235,6 +235,6 @@ impl From<palette::rgb::Rgb> for DeviceColor {
 
 impl From<u16> for DeviceColor {
     fn from(ct: u16) -> Self {
-        DeviceColor::Ct(Ct { ct: ct as u64 })
+        Self::Ct(Ct { ct: ct as u64 })
     }
 }

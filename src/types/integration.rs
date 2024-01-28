@@ -15,7 +15,7 @@ impl FromStr for IntegrationId {
     type Err = Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(IntegrationId(s.to_string()))
+        Ok(Self(s.to_string()))
     }
 }
 

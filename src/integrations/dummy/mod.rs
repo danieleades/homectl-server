@@ -36,7 +36,7 @@ impl Integration for Dummy {
             .try_deserialize()
             .wrap_err("Failed to deserialize config of Dummy integration")?;
 
-        Ok(Dummy {
+        Ok(Self {
             id: id.clone(),
             config,
             event_tx,

@@ -64,7 +64,7 @@ impl Integration for Mqtt {
             .try_deserialize()
             .wrap_err("Failed to deserialize config of Mqtt integration")?;
 
-        Ok(Mqtt {
+        Ok(Self {
             id: id.clone(),
             config,
             event_tx,

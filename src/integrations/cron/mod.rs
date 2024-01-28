@@ -44,7 +44,7 @@ impl Integration for Cron {
             .try_deserialize()
             .wrap_err("Failed to deserialize config of Cron integration")?;
 
-        Ok(Cron {
+        Ok(Self {
             id: id.clone(),
             config,
             event_tx,
