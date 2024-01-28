@@ -69,7 +69,7 @@ fn compute_scene_device_state(
                 state.transition_ms = None;
             }
 
-            Some(state.clone())
+            Some(state)
         }
 
         SceneDeviceConfig::SceneLink(link) => {

@@ -355,14 +355,14 @@ impl Devices {
 
             // Replace device state with expected state
             if let (Some(expected_state), Some(capabilities)) = (expected_state, capabilities) {
-                let mut expected_state = expected_state.clone();
+                let mut expected_state = expected_state;
 
                 // Converted expected state into a supported color format
                 expected_state.color = expected_state
                     .color
                     .and_then(|c| c.to_device_preferred_mode(capabilities));
 
-                device = device.set_controllable_state(expected_state.clone());
+                device = device.set_controllable_state(expected_state);
             }
         }
 

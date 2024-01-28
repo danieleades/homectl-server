@@ -173,7 +173,7 @@ fn context_diff_obj(a: &HashMapContext, b: &HashMapContext) -> Result<serde_json
         .filter_map(|(name, value)| {
             let original_value = a.get_value(&name);
             if Some(&value) != original_value {
-                Some((name.clone(), value.clone()))
+                Some((name.clone(), value))
             } else {
                 None
             }
